@@ -1,3 +1,5 @@
+# Holds params that must be used several places in the classification.py script
+
 
 import numpy as np
 

@@ -5,6 +5,8 @@ warnings.filterwarnings('ignore')
 
 import numpy as np
 from sklearn import datasets
+
+# Import all methods to HungaBunga in classification
 from sklearn.linear_model import SGDClassifier, LogisticRegression, Perceptron, PassiveAggressiveClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
@@ -18,6 +20,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import ParameterSampler
 
+# Import all methods to HungaBunga in regression
 from sklearn.ensemble import AdaBoostRegressor, ExtraTreesRegressor, RandomForestRegressor
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.base import BaseEstimator
@@ -28,6 +31,11 @@ from sklearn.base import is_classifier
 from core import *
 from params import *
 
+
+############################## PARAMETERS FOR AUTOMATIC RE-TRAINING HERE: ##############################
+
+# Tuple of (model_name, dict(params))
+# Model name obviously from scikitlearn
 
 linear_models_n_params = [
     (SGDClassifier,
@@ -176,13 +184,19 @@ tree_models_n_params_small = [
 ]
 
 
+############################## CREATE LIST OF ALL PARAMETERS SHOWN BEFORE, RUN CLASSIFIERS ##############################
+
 def run_all_classifiers(x, y, small = True, normalize_x = True, n_jobs=cpu_count()-1, brain=False, test_size=0.2, n_splits=5, upsample=True, scoring=None, verbose=False, grid_search=True):
     all_params = (linear_models_n_params_small if small else linear_models_n_params) +  (nn_models_n_params_small if small else nn_models_n_params) + ([] if small else gaussianprocess_models_n_params) + neighbor_models_n_params + (svm_models_n_params_small if small else svm_models_n_params) + (tree_models_n_params_small if small else tree_models_n_params)
     return main_loop(all_params, StandardScaler().fit_transform(x) if normalize_x else x, y, isClassification=True, n_jobs=n_jobs, verbose=verbose, brain=brain, test_size=test_size, n_splits=n_splits, upsample=upsample, scoring=scoring, grid_search=grid_search)
 
+
+############################## Run just one classifier? ##############################
+
 def run_one_classifier(x, y, small = True, normalize_x = True, n_jobs=cpu_count()-1, brain=False, test_size=0.2, n_splits=5, upsample=True, scoring=None, verbose=False, grid_search=True):
     all_params = (linear_models_n_params_small if small else linear_models_n_params) +  (nn_models_n_params_small if small else nn_models_n_params) + ([] if small else gaussianprocess_models_n_params) + neighbor_models_n_params + (svm_models_n_params_small if small else svm_models_n_params) + (tree_models_n_params_small if small else tree_models_n_params)
     all_params = random.choice(all_params)
+    # Potential problem here with n_iter being 1, should yield only a single parameter setting - Should only be an issue for n_iter larger than num_params?
     return all_params[0](**(list(ParameterSampler(all_params[1], n_iter=1))[0]))
 
 

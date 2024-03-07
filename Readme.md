@@ -17,7 +17,7 @@ from hunga_bunga import HungaBungaClassifier, HungaBungaRegressor
 ##### And then simply: 
 
 <p align="center">
-  <img src="https://github.com/ypeleg/HungaBunga/blob/master/HungaBunga.png?raw=true" width="400">
+  <img src="https://github.com/ypeleg/HungaBunga/blob/master/HungaBungaExtraMonke.png?raw=true" width="400">
 </p>
 
 -----

@@ -1,0 +1,4 @@
+1. Update to newest versions of python, sklearn, etc.
+2. Make work with different data types, NaN, categorical, str, etc.
+3. Add remaining models not already there
+4. Consider advanced stuff like ensemble and whatever
